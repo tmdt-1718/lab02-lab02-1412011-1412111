@@ -1,21 +1,21 @@
 version: '3'
 services:
-  webapp:
+  web:
     build: .
     volumes:
-      - .:/webapp
+      - .:/web
     ports:
       - 3000:3000
-    container_name: webapp
+    container_name: web
     links:
-      - db
-    command: sh /webapp/scripts/startup.sh
+      - dbp
+    command: sh /web/scripts/startup.sh
     env_file: .env
     stdin_open: true
     tty: true
 
-  db:
+  dbp:
     image: postgres:10.0
-    container_name: db
+    container_name: dbp
     env_file: .env
 

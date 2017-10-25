@@ -1,24 +1,51 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Blog</title>
-    <%= csrf_meta_tags %>
+<head>
+  <meta charset="utf-8">
+  <title>Message</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
-
-    <body>
-    	
-    <section class="content" style="min-height: auto;">
-      <% flash.each do |key, value| %>
-        <div class="row">
-          <div class="alert alert-<%= key %>">
-            <%= value %>
-          </div>
-        </div>
+<nav class="navbar navbar-dark bg-dark">
+  <div class="container">
+    <div class="navbar-header ">
+      <%= link_to 'Home', root_path, class: 'navbar-brand' %>
+    </div>
+    <ul class="nav navbar-nav">
+      <% if user_signed_in? %>
+        <li><%= link_to 'Edit Profile', edit_user_registration_path %></li>
+        <li><%= link_to 'Conversations', conversations_path %></li>
+        <li><%= link_to 'Friend', listfriend_path %></li>
+        <!--<li><%= link_to 'All User', users_path %></li>-->
+        <li><%= link_to 'Log Out', destroy_user_session_path, method: :delete %></li>
+      <% else %>
+        <li><%= link_to 'Log In', new_user_session_path %></li>
       <% end %>
-    </section>
-    <%= yield %>
-  </body>
+    </ul>
+  </div>
+</nav>
+ 
+<div class="container">
+  <% flash.each do |key, value| %>
+    <div class="alert alert-<%= key %>">
+      <%= value %>
+    </div>
+  <% end %>
+
+  <div class="page-header">
+    <h1><%= yield :page_header %></h1>
+  </div>
+
+  <%= yield %>
+</div>
+
+<footer>
+  <div class="container"> 
+  </div>
+</footer>
+  
+</body>
 </html>

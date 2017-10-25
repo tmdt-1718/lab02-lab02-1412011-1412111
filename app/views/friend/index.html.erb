@@ -1,0 +1,80 @@
+<div class="container">
+<div class="row justify-content-between">
+	<div class="col-md-6">
+	<h1>LIST FRIEND</h1>
+	<table class="table table-hover">
+		
+		  <thead>
+		    <tr>
+		      <th scope="col">#</th>
+		      <th scope="col">Name</th>
+		      <th scope="col">Email</th>
+		      <th scope="col"></th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		  	<% @listIDUser.each_with_index do |lf,index| %>
+		    <tr>
+		    	<% user = User.find(lf.friend_id) %>
+		      <th scope="row"><%=index+1%></th>
+		      <td><b><%= user.name %></b></td>
+		      <td><%= user.email %></td>
+		      <td><% unless current_user == user %>
+		        <%= link_to 'Send message', new_message_path(to: user.id), class: 'btn btn-default btn-sm' %>
+		      <% end %>
+		  		</td>
+		    </tr>
+		     <% end %>
+		  </tbody>
+		
+	</table>
+</div> <!-- End List Friend-->
+
+        <div class="col-md-3">
+	        <h1>ADD FRIEND</h1>
+	         
+	        <div class="row">
+	        	<%= form_for listfriend_search_path, method: :get do |f|%>
+				  <div class="input-group">
+				    <%= f.text_field :search, class: 'form-control', placeholder: 'Search for', required: true %>
+				  
+				  <span class="input-group-btn">
+				  	<%= f.submit "Search", class: 'btn btn-default' %>
+				  </span>
+				  </div>
+				<% end %>
+	            <!--<form action="#" method="get">
+	                <div class="input-group">
+	                    <input class="form-control" id="system-search" name="q" placeholder="Search for" required>
+	                    <span class="input-group-btn">
+	                        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>Search</button>
+	                    </span>
+	                </div>
+	            </form>1-->
+	        </div>
+ 
+			<div class="col-md-3">
+	    	 <table class="table table-list-search">
+	                    <thead>
+	                        <tr>
+	                            <th><i>Information</i></th>
+	                        </tr>
+	                    </thead>
+	                    <tbody>
+	                        <tr>
+	                        	<% if @usersearch !=nil then%>
+	                            	<td><%= @usersearch.name%></td>
+	                            	<td><%= @usersearch.email%></td>
+	                            	<td><%= link_to 'Add', listfriend_add_path %></td>
+	                            <% else %>
+	                            	<td>none data</td>
+	                            <% end %>
+	                        </tr>
+	                    </tbody>
+	            </table>   
+			</div>
+		</div>
+
+	</div><!--end row-->
+
+</div>
